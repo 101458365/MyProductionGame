@@ -7,36 +7,37 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private GameObject autoProjectilePrefab;
     [SerializeField] private float autoProjectileSpeed = 10f;
     [SerializeField] private float autoTargetRange = 15f;
-    [SerializeField] private float autoFireRate = 0.5f; // Time between auto shots
-    [SerializeField] private Transform autoFirePoint; // Where auto projectile spawns
+    [SerializeField] private float autoFireRate = 0.5f;
+    [SerializeField] private Transform autoFirePoint;
 
-    [Header("Manual Shooting")]
-    [SerializeField] private GameObject manualProjectilePrefab;
-    [SerializeField] private float manualProjectileSpeed = 15f;
-    [SerializeField] private float manualFireRate = 0.2f; // Time between manual shots
-    [SerializeField] private Transform manualFirePoint; // Where manual projectile spawns
+    [Header("Melee Attack")]
+    [SerializeField] private float meleeRange = 2f;
+    [SerializeField] private float meleeAngle = 90f;
+    [SerializeField] private float meleeCooldown = 0.5f;
 
     private Camera mainCamera;
+    private MeleeVisual meleeVisual;
     private float nextAutoFireTime = 0f;
-    private float nextManualFireTime = 0f;
+    private float nextMeleeTime = 0f;
 
     private void Awake()
     {
         mainCamera = Camera.main;
+        meleeVisual = GetComponent<MeleeVisual>();
     }
 
     private void Update()
     {
-        // Auto-shoot at nearest enemy (runs independently)
+        // Auto-shoot at nearest enemy
         if (Time.time >= nextAutoFireTime)
         {
             ShootAtNearestEnemy();
         }
 
-        // Left click - shoot at mouse position (independent from auto-shoot)
-        if (Mouse.current.leftButton.wasPressedThisFrame && Time.time >= nextManualFireTime)
+        // Left click - melee attack towards mouse
+        if (Mouse.current.leftButton.wasPressedThisFrame && Time.time >= nextMeleeTime)
         {
-            ShootAtMouse();
+            MeleeAttack();
         }
     }
 
@@ -47,33 +48,54 @@ public class PlayerShooting : MonoBehaviour
         if (nearestEnemy != null)
         {
             Vector2 direction = (nearestEnemy.transform.position - transform.position).normalized;
-            FireProjectile(autoProjectilePrefab, autoProjectileSpeed, direction, autoFirePoint);
+            FireProjectile(direction);
             nextAutoFireTime = Time.time + autoFireRate;
         }
     }
 
-    private void ShootAtMouse()
+    private void MeleeAttack()
     {
         Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         mouseWorldPos.z = 0;
+        Vector2 attackDirection = (mouseWorldPos - transform.position).normalized;
 
-        Vector2 direction = (mouseWorldPos - transform.position).normalized;
-        FireProjectile(manualProjectilePrefab, manualProjectileSpeed, direction, manualFirePoint);
-        nextManualFireTime = Time.time + manualFireRate;
+        if (meleeVisual != null)
+        {
+            meleeVisual.Thrust();
+        }
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in enemies)
+        {
+            Vector2 toEnemy = enemy.transform.position - transform.position;
+            float distance = toEnemy.magnitude;
+
+            if (distance <= meleeRange)
+            {
+                float angle = Vector2.Angle(attackDirection, toEnemy.normalized);
+
+                if (angle <= meleeAngle / 2)
+                {
+                    Destroy(enemy);
+                }
+            }
+        }
+
+        nextMeleeTime = Time.time + meleeCooldown;
     }
 
-    private void FireProjectile(GameObject prefab, float speed, Vector2 direction, Transform firePoint)
+    private void FireProjectile(Vector2 direction)
     {
-        Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position;
-        GameObject projectile = Instantiate(prefab, spawnPos, Quaternion.identity);
+        Vector3 spawnPos = autoFirePoint != null ? autoFirePoint.position : transform.position;
+        GameObject projectile = Instantiate(autoProjectilePrefab, spawnPos, Quaternion.identity);
 
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.linearVelocity = direction * speed;
+            rb.linearVelocity = direction * autoProjectileSpeed;
         }
 
-        // Rotate projectile to face direction
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         projectile.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
@@ -96,5 +118,11 @@ public class PlayerShooting : MonoBehaviour
         }
 
         return nearest;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, meleeRange);
     }
 }
