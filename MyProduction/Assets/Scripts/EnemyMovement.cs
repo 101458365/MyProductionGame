@@ -23,11 +23,11 @@ public class EnemyMovement : MonoBehaviour
 
         if (distance > stopDistance)
         {
-            rb.velocity = direction * moveSpeed;
+            rb.linearVelocity = direction * moveSpeed;
         }
         else
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
         }
     }
 }
