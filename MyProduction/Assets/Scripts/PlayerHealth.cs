@@ -106,10 +106,10 @@ public class PlayerHealth : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        TakeDamage(10);
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    TakeDamage(10);
+    //}
 
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;

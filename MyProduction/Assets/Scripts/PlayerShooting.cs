@@ -77,7 +77,11 @@ public class PlayerShooting : MonoBehaviour
 
                 if (angle <= meleeAngle / 2)
                 {
-                    Destroy(enemy);
+                    EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+                    if (enemyHealth != null)
+                    {
+                        enemyHealth.TakeDamage(2f);
+                    }
                 }
             }
         }
