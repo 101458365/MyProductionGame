@@ -30,8 +30,13 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        // TODO: Add kill count 
-        // TODO: Spawn drops 
+        // Add kill count
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.AddKill();
+        }
+
+        // TODO: Spawn drops
 
         Destroy(gameObject);
     }
