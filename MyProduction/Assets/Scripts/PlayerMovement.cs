@@ -30,6 +30,11 @@ public class PlayerMovement : MonoBehaviour
         moveAction.canceled -= OnMove;
     }
 
+    public void SetMoveSpeed(float newSpeed)
+    {
+        moveSpeed = newSpeed;
+    }
+
     private void FixedUpdate()
     {
         rb.linearVelocity = moveInput * moveSpeed;
