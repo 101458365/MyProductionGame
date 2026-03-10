@@ -19,6 +19,8 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= damage;
 
+        Debug.Log($"Enemy took {damage} damage! HP: {currentHealth}/{maxHealth}");
+
         // Flash white when hit
         StartCoroutine(FlashWhite());
 

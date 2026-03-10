@@ -16,6 +16,9 @@ public class PlayerStats : MonoBehaviour
     private float totalAttackSpeedMultiplier = 1f;
     private float totalMoveSpeedMultiplier = 1f;
 
+    // Track previous health bonus to avoid compounding
+    private float previousHealthBonus = 0f;
+
     public void AddItem(ItemData item)
     {
         if (inventory.ContainsKey(item))
@@ -52,15 +55,17 @@ public class PlayerStats : MonoBehaviour
             totalHealthBonus += item.maxHealthBonus * stacks;
         }
 
-        // Apply health bonus
-        if (totalHealthBonus > 0)
+        // Apply health bonus (only the DIFFERENCE from last time)
+        float healthDifference = totalHealthBonus - previousHealthBonus;
+        if (healthDifference > 0)
         {
             PlayerHealth health = GetComponent<PlayerHealth>();
             if (health != null)
             {
-                health.IncreaseMaxHealth(totalHealthBonus);
+                health.IncreaseMaxHealth(healthDifference); // Only add the NEW health
             }
         }
+        previousHealthBonus = totalHealthBonus; // Update tracking
 
         // Apply move speed
         PlayerMovement movement = GetComponent<PlayerMovement>();
@@ -71,7 +76,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     // Getters
-    public float DamageMultiplier => baseDamage * totalDamageMultiplier;
+    public float DamageMultiplier => totalDamageMultiplier;
     public float AttackSpeedMultiplier => totalAttackSpeedMultiplier;
     public Dictionary<ItemData, int> Inventory => inventory;
 }

@@ -3,26 +3,35 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float lifetime = 5f;
+    private float damage = 1f;
+    private bool damageSet = false;
 
-    private void Start()
+    private void Awake()
     {
         Destroy(gameObject, lifetime);
     }
 
+    public void SetDamage(float newDamage)
+    {
+        damage = newDamage;
+        damageSet = true;
+        Debug.Log($"Projectile damage SET to: {damage}");
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Destroy enemy on hit
         if (collision.CompareTag("Enemy"))
         {
+            Debug.Log($"Projectile hitting enemy with {damage} damage (damage was set: {damageSet})");
+
             EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(1f); // 1 damage per projectile
+                enemyHealth.TakeDamage(damage);
             }
             Destroy(gameObject);
         }
 
-        // Destroy on wall hit
         if (collision.CompareTag("Wall"))
         {
             Destroy(gameObject);

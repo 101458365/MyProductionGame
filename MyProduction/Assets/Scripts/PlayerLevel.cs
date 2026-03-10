@@ -13,6 +13,7 @@ public class PlayerLevel : MonoBehaviour
     [SerializeField] private float baseAttackSpeed = 1f;
     [SerializeField] private float baseMoveSpeed = 5f;
     [SerializeField] private float baseMaxHealth = 100f;
+    [SerializeField] private int baseProjectileCount = 1;
 
     private int xpRequiredForNextLevel;
 
@@ -42,8 +43,11 @@ public class PlayerLevel : MonoBehaviour
 
         Debug.Log($"LEVEL UP! Now level {currentLevel}");
 
-        // TODO: Show level up choice screen
-
+        // Show level up choice screen
+        if (LevelUpUI.Instance != null)
+        {
+            LevelUpUI.Instance.ShowLevelUpScreen();
+        }
     }
 
     private void CalculateXPRequired()
@@ -77,6 +81,12 @@ public class PlayerLevel : MonoBehaviour
         Debug.Log($"Base Move Speed increased to {baseMoveSpeed}!");
     }
 
+    public void IncreaseProjectileCount(int amount)
+    {
+        baseProjectileCount += amount;
+        Debug.Log($"Projectile Count increased to {baseProjectileCount}!");
+    }
+
     public void IncreaseMaxHealth(float amount)
     {
         baseMaxHealth += amount;
@@ -93,8 +103,8 @@ public class PlayerLevel : MonoBehaviour
     // Getters
     public int CurrentLevel => currentLevel;
     public int CurrentXP => currentXP;
-    public int XPRequiredForNextLevel => xpRequiredForNextLevel;
     public float XPProgress => (float)currentXP / xpRequiredForNextLevel;
-    public float BaseDamage => baseDamage;
     public float BaseAttackSpeed => baseAttackSpeed;
+    public int BaseProjectileCount => baseProjectileCount;
+    public float BaseDamage => baseDamage;
 }

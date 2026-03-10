@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -47,12 +48,43 @@ public class PlayerShooting : MonoBehaviour
 
     private void ShootAtNearestEnemy()
     {
-        GameObject nearestEnemy = FindNearestEnemy();
-
-        if (nearestEnemy != null)
+        // Get projectile count
+        int projectileCount = 1;
+        if (playerLevel != null)
         {
-            Vector2 direction = (nearestEnemy.transform.position - transform.position).normalized;
-            FireProjectile(direction);
+            projectileCount = playerLevel.BaseProjectileCount;
+        }
+
+        // Find multiple nearest enemies
+        List<GameObject> nearestEnemies = FindNearestEnemies(projectileCount);
+
+        if (nearestEnemies.Count > 0)
+        {
+            int projectilesFired = 0;
+
+            // Fire one projectile at each unique enemy
+            foreach (GameObject enemy in nearestEnemies)
+            {
+                Vector2 direction = (enemy.transform.position - transform.position).normalized;
+                FireSingleProjectile(direction);
+                projectilesFired++;
+            }
+
+            // If we have extra projectiles and only 1 enemy, fire remaining at that enemy in a spread
+            if (nearestEnemies.Count == 1 && projectilesFired < projectileCount)
+            {
+                GameObject target = nearestEnemies[0];
+                Vector2 baseDirection = (target.transform.position - transform.position).normalized;
+
+                // Fire remaining projectiles in a slight spread
+                int remaining = projectileCount - projectilesFired;
+                for (int i = 0; i < remaining; i++)
+                {
+                    float angle = (i + 1) * 10f * (i % 2 == 0 ? 1 : -1); // Alternate left/right: +10, -10, +20, -20...
+                    Vector2 direction = Quaternion.Euler(0, 0, angle) * baseDirection;
+                    FireSingleProjectile(direction);
+                }
+            }
 
             // Apply attack speed multiplier to fire rate
             float finalFireRate = autoFireRate;
@@ -67,6 +99,72 @@ public class PlayerShooting : MonoBehaviour
 
             nextAutoFireTime = Time.time + finalFireRate;
         }
+    }
+
+    private List<GameObject> FindNearestEnemies(int count)
+    {
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        List<GameObject> nearestEnemies = new List<GameObject>();
+
+        // Create list of enemies with distances
+        List<(GameObject enemy, float distance)> enemyDistances = new List<(GameObject, float)>();
+
+        foreach (GameObject enemy in allEnemies)
+        {
+            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            if (distance <= autoTargetRange)
+            {
+                enemyDistances.Add((enemy, distance));
+            }
+        }
+
+        // Sort by distance (closest first)
+        enemyDistances.Sort((a, b) => a.distance.CompareTo(b.distance));
+
+        // Take the closest 'count' enemies
+        int enemiesToTake = Mathf.Min(count, enemyDistances.Count);
+        for (int i = 0; i < enemiesToTake; i++)
+        {
+            nearestEnemies.Add(enemyDistances[i].enemy);
+        }
+
+        return nearestEnemies;
+    }
+
+    private void FireSingleProjectile(Vector2 direction)
+    {
+        Vector3 spawnPos = autoFirePoint != null ? autoFirePoint.position : transform.position;
+        GameObject projectile = Instantiate(autoProjectilePrefab, spawnPos, Quaternion.identity);
+
+        // Set damage on projectile
+        Projectile proj = projectile.GetComponent<Projectile>();
+        if (proj != null)
+        {
+            float totalDamage = 1f; // Base projectile damage
+
+            // Apply base damage from leveling up
+            if (playerLevel != null)
+            {
+                totalDamage = playerLevel.BaseDamage;
+            }
+
+            // Apply damage multiplier from items
+            if (playerStats != null)
+            {
+                totalDamage = playerLevel.BaseDamage;
+            }
+            Debug.Log($"Total Projectile Damage: {totalDamage}");
+            proj.SetDamage(totalDamage);
+        }
+
+        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = direction * autoProjectileSpeed;
+        }
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        projectile.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void MeleeAttack()
@@ -125,57 +223,6 @@ public class PlayerShooting : MonoBehaviour
         }
 
         nextMeleeTime = Time.time + finalMeleeCooldown;
-    }
-
-    private void FireProjectile(Vector2 direction)
-    {
-        Vector3 spawnPos = autoFirePoint != null ? autoFirePoint.position : transform.position;
-        GameObject projectile = Instantiate(autoProjectilePrefab, spawnPos, Quaternion.identity);
-
-        // Set damage on projectile
-        Projectile proj = projectile.GetComponent<Projectile>();
-        if (proj != null)
-        {
-            float totalDamage = 1f; // Base projectile damage
-            if (playerLevel != null)
-            {
-                totalDamage *= playerLevel.BaseDamage;
-            }
-            if (playerStats != null)
-            {
-                totalDamage *= playerStats.DamageMultiplier;
-            }
-            //proj.SetDamage(totalDamage);
-        }
-
-        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.linearVelocity = direction * autoProjectileSpeed;
-        }
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        projectile.transform.rotation = Quaternion.Euler(0, 0, angle);
-    }
-
-    private GameObject FindNearestEnemy()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject nearest = null;
-        float closestDistance = autoTargetRange;
-
-        foreach (GameObject enemy in enemies)
-        {
-            float distance = Vector2.Distance(transform.position, enemy.transform.position);
-
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                nearest = enemy;
-            }
-        }
-
-        return nearest;
     }
 
     private void OnDrawGizmosSelected()

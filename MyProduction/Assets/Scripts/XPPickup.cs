@@ -11,6 +11,9 @@ public class XPPickup : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        // Safety: destroy after 30 seconds if not collected
+        Destroy(gameObject, 30f);
     }
 
     private void Update()
@@ -34,8 +37,9 @@ public class XPPickup : MonoBehaviour
             if (playerLevel != null)
             {
                 playerLevel.AddXP(xpAmount);
-                Destroy(gameObject);
+                Debug.Log($"Collected {xpAmount} XP!");
             }
+            Destroy(gameObject);
         }
     }
 
