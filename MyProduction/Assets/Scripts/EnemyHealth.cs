@@ -36,7 +36,11 @@ public class EnemyHealth : MonoBehaviour
             GameManager.Instance.AddKill();
         }
 
-        // TODO: Spawn drops
+        // Spawn drops
+        if (DropManager.Instance != null)
+        {
+            DropManager.Instance.SpawnDrops(transform.position);
+        }
 
         Destroy(gameObject);
     }

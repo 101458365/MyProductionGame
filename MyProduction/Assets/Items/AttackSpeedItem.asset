@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72aa3aa745c782843bf2d67146d011a3, type: 3}
   m_Name: AttackSpeedItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: AttackSpeedItem
+  itemName: SpeedItem
   icon: {fileID: -2413806693520163455, guid: a75c88ccd3b284b4caeda0993cd07b5b, type: 3}
   rarity: 0
   damageBonus: 0
-  attackSpeedBonus: 0.15
+  attackSpeedBonus: 0.25
   maxHealthBonus: 0
-  moveSpeedBonus: 0
-  description: Increase attack speed by 15%
+  moveSpeedBonus: 0.1
+  description: 'Increase attack speed by 25%
+
+    Increase Move speed by 0.1
+
+'

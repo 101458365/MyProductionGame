@@ -17,6 +17,8 @@ public class PlayerShooting : MonoBehaviour
 
     private Camera mainCamera;
     private MeleeVisual meleeVisual;
+    private PlayerLevel playerLevel;
+    private PlayerStats playerStats;
     private float nextAutoFireTime = 0f;
     private float nextMeleeTime = 0f;
 
@@ -24,6 +26,8 @@ public class PlayerShooting : MonoBehaviour
     {
         mainCamera = Camera.main;
         meleeVisual = GetComponent<MeleeVisual>();
+        playerLevel = GetComponent<PlayerLevel>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     private void Update()
@@ -49,7 +53,19 @@ public class PlayerShooting : MonoBehaviour
         {
             Vector2 direction = (nearestEnemy.transform.position - transform.position).normalized;
             FireProjectile(direction);
-            nextAutoFireTime = Time.time + autoFireRate;
+
+            // Apply attack speed multiplier to fire rate
+            float finalFireRate = autoFireRate;
+            if (playerLevel != null)
+            {
+                finalFireRate /= playerLevel.BaseAttackSpeed;
+            }
+            if (playerStats != null)
+            {
+                finalFireRate /= playerStats.AttackSpeedMultiplier;
+            }
+
+            nextAutoFireTime = Time.time + finalFireRate;
         }
     }
 
@@ -66,6 +82,17 @@ public class PlayerShooting : MonoBehaviour
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
+        // Calculate melee damage
+        float meleeDamage = 2f; // Base melee damage
+        if (playerLevel != null)
+        {
+            meleeDamage *= playerLevel.BaseDamage;
+        }
+        if (playerStats != null)
+        {
+            meleeDamage *= playerStats.DamageMultiplier;
+        }
+
         foreach (GameObject enemy in enemies)
         {
             Vector2 toEnemy = enemy.transform.position - transform.position;
@@ -80,19 +107,46 @@ public class PlayerShooting : MonoBehaviour
                     EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
                     if (enemyHealth != null)
                     {
-                        enemyHealth.TakeDamage(2f);
+                        enemyHealth.TakeDamage(meleeDamage);
                     }
                 }
             }
         }
 
-        nextMeleeTime = Time.time + meleeCooldown;
+        // Apply attack speed multiplier to melee cooldown
+        float finalMeleeCooldown = meleeCooldown;
+        if (playerLevel != null)
+        {
+            finalMeleeCooldown /= playerLevel.BaseAttackSpeed;
+        }
+        if (playerStats != null)
+        {
+            finalMeleeCooldown /= playerStats.AttackSpeedMultiplier;
+        }
+
+        nextMeleeTime = Time.time + finalMeleeCooldown;
     }
 
     private void FireProjectile(Vector2 direction)
     {
         Vector3 spawnPos = autoFirePoint != null ? autoFirePoint.position : transform.position;
         GameObject projectile = Instantiate(autoProjectilePrefab, spawnPos, Quaternion.identity);
+
+        // Set damage on projectile
+        Projectile proj = projectile.GetComponent<Projectile>();
+        if (proj != null)
+        {
+            float totalDamage = 1f; // Base projectile damage
+            if (playerLevel != null)
+            {
+                totalDamage *= playerLevel.BaseDamage;
+            }
+            if (playerStats != null)
+            {
+                totalDamage *= playerStats.DamageMultiplier;
+            }
+            //proj.SetDamage(totalDamage);
+        }
 
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
         if (rb != null)
