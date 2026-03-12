@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72aa3aa745c782843bf2d67146d011a3, type: 3}
-  m_Name: HPitem
+  m_Name: DamageItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: HPItem
-  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  rarity: 0
-  damageBonus: 0
+  itemName: Damage
+  icon: {fileID: 0}
+  rarity: 2
+  damageBonus: 0.2
   attackSpeedBonus: 0
-  maxHealthBonus: 5
+  maxHealthBonus: 0
   moveSpeedBonus: 0
-  description: Increase max health by 5
+  description: 

@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72aa3aa745c782843bf2d67146d011a3, type: 3}
-  m_Name: HPitem
+  m_Name: MoveSpeedItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: HPItem
-  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  itemName: MoveSpeedItem
+  icon: {fileID: -2413806693520163455, guid: a75c88ccd3b284b4caeda0993cd07b5b, type: 3}
   rarity: 0
   damageBonus: 0
   attackSpeedBonus: 0
-  maxHealthBonus: 5
-  moveSpeedBonus: 0
-  description: Increase max health by 5
+  maxHealthBonus: 0
+  moveSpeedBonus: 0.1
+  description: 'Increase move speed by 10%
+
+
+'

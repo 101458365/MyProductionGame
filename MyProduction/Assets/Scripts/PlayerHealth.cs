@@ -12,6 +12,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Slider healthBar;
     [SerializeField] private CanvasGroup damageFlash; // Red flash overlay
     [SerializeField] private TextMeshProUGUI healthText;
+    
+    [Header("References")]
+    [SerializeField] private GameObject meleeWeapon;
 
     private float currentHealth;
     private bool isInvincible = false;
@@ -107,7 +110,45 @@ public class PlayerHealth : MonoBehaviour
             GameManager.Instance.GameOver();
         }
 
-        gameObject.SetActive(false);
+        // Disable visuals and gameplay instead of the whole GameObject
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        if (renderer != null)
+        {
+            renderer.enabled = false;
+        }
+
+        // Disable movement and shooting
+        PlayerMovement movement = GetComponent<PlayerMovement>();
+        if (movement != null)
+        {
+            movement.enabled = false;
+        }
+
+        PlayerShooting shooting = GetComponent<PlayerShooting>();
+        if (shooting != null)
+        {
+            shooting.enabled = false;
+        }
+
+        // Disable melee visual
+        MeleeVisual melee = GetComponent<MeleeVisual>();
+        if (melee != null)
+        {
+            melee.enabled = false;
+        }
+
+        // Disable melee weapon visuals
+        if (meleeWeapon != null)
+        {
+            meleeWeapon.SetActive(false);
+        }
+
+        // Disable collider so enemies don't keep hitting you
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+        {
+            col.enabled = false;
+        }
     }
 
     //private void OnCollisionEnter2D(Collision2D collision)

@@ -14,6 +14,14 @@ public class EnemyMovement : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+    private void Start()
+    {
+        // Apply difficulty scaling to speed
+        if (DifficultyManager.Instance != null)
+        {
+            moveSpeed *= DifficultyManager.Instance.SpeedMultiplier;
+        }
+    }
     private void FixedUpdate()
     {
         if (player == null) return;

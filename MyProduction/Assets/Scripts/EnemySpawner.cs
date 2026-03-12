@@ -29,8 +29,19 @@ public class EnemySpawner : MonoBehaviour
         {
             SpawnEnemy();
 
+            // Decrease spawn rate over time
             currentSpawnRate = Mathf.Max(minimumSpawnRate, currentSpawnRate - spawnRateDecreaseOverTime);
-            nextSpawnTime = Time.time + currentSpawnRate;
+
+            // Apply difficulty multiplier to spawn rate (makes spawning faster)
+            if (DifficultyManager.Instance != null)
+            {
+                float adjustedSpawnRate = currentSpawnRate / DifficultyManager.Instance.SpawnRateMultiplier;
+                nextSpawnTime = Time.time + adjustedSpawnRate;
+            }
+            else
+            {
+                nextSpawnTime = Time.time + currentSpawnRate;
+            }
         }
     }
 

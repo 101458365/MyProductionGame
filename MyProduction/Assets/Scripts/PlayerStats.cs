@@ -16,8 +16,11 @@ public class PlayerStats : MonoBehaviour
     private float totalAttackSpeedMultiplier = 1f;
     private float totalMoveSpeedMultiplier = 1f;
 
-    // Track previous health bonus to avoid compounding
+    // Track previous bonuses to avoid compounding
     private float previousHealthBonus = 0f;
+    private float previousDamageBonus = 0f;
+    private float previousAttackSpeedBonus = 0f;
+    private float previousMoveSpeedBonus = 0f;
 
     public void AddItem(ItemData item)
     {
@@ -37,42 +40,49 @@ public class PlayerStats : MonoBehaviour
 
     private void RecalculateStats()
     {
-        // Reset multipliers
-        totalDamageMultiplier = 1f;
-        totalAttackSpeedMultiplier = 1f;
-        totalMoveSpeedMultiplier = 1f;
+        // Calculate total bonuses from all items
         float totalHealthBonus = 0f;
+        float totalDamageBonus = 0f;
+        float totalAttackSpeedBonus = 0f;
+        float totalMoveSpeedBonus = 0f;
 
-        // Apply all items
+        // Sum up all item bonuses
         foreach (var kvp in inventory)
         {
             ItemData item = kvp.Key;
             int stacks = kvp.Value;
 
-            totalDamageMultiplier += item.damageBonus * stacks;
-            totalAttackSpeedMultiplier += item.attackSpeedBonus * stacks;
-            totalMoveSpeedMultiplier += item.moveSpeedBonus * stacks;
+            totalDamageBonus += item.damageBonus * stacks;
+            totalAttackSpeedBonus += item.attackSpeedBonus * stacks;
+            totalMoveSpeedBonus += item.moveSpeedBonus * stacks;
             totalHealthBonus += item.maxHealthBonus * stacks;
         }
 
-        // Apply health bonus (only the DIFFERENCE from last time)
+        // Apply ONLY the new bonuses (difference from previous)
+
+        // Health
         float healthDifference = totalHealthBonus - previousHealthBonus;
         if (healthDifference > 0)
         {
             PlayerHealth health = GetComponent<PlayerHealth>();
             if (health != null)
             {
-                health.IncreaseMaxHealth(healthDifference); // Only add the NEW health
+                health.IncreaseMaxHealth(healthDifference);
             }
         }
-        previousHealthBonus = totalHealthBonus; // Update tracking
+        previousHealthBonus = totalHealthBonus;
 
-        // Apply move speed
+        // Move Speed - just set the multiplier directly
+        totalMoveSpeedMultiplier = 1f + totalMoveSpeedBonus;
         PlayerMovement movement = GetComponent<PlayerMovement>();
         if (movement != null)
         {
             movement.SetMoveSpeed(baseMoveSpeed * totalMoveSpeedMultiplier);
         }
+
+        // Damage and Attack Speed - store as multipliers
+        totalDamageMultiplier = 1f + totalDamageBonus;
+        totalAttackSpeedMultiplier = 1f + totalAttackSpeedBonus;
     }
 
     // Getters

@@ -12,6 +12,13 @@ public class EnemyHealth : MonoBehaviour
 
     private void Start()
     {
+        // Apply difficulty scaling
+        if (DifficultyManager.Instance != null)
+        {
+            maxHealth *= DifficultyManager.Instance.HPMultiplier;
+            contactDamage *= DifficultyManager.Instance.DamageMultiplier;
+        }
+
         currentHealth = maxHealth;
     }
 
