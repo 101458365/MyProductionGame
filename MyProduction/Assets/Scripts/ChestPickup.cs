@@ -1,5 +1,12 @@
 using UnityEngine;
 
+/// <summary>
+/// Updated ChestPickup — instead of silently adding an item to inventory,
+/// it now calls ItemRevealUI.ShowItem() which pauses the game and shows
+/// the player what they got before adding it.
+///
+/// Drop this in to REPLACE your existing ChestPickup.cs
+/// </summary>
 public class ChestPickup : MonoBehaviour
 {
     [Header("Item Pool")]
@@ -8,12 +15,12 @@ public class ChestPickup : MonoBehaviour
     [SerializeField] private ItemData[] rareItems;
 
     [Header("Drop Chances")]
-    [SerializeField] private float commonChance = 0.70f;  // 70%
-    [SerializeField] private float uncommonChance = 0.25f; // 25%
-    [SerializeField] private float rareChance = 0.05f;    // 5%
+    [SerializeField] private float commonChance   = 0.70f;
+    [SerializeField] private float uncommonChance = 0.25f;
+    // rareChance = 1 - common - uncommon = 0.05
 
     [Header("Visual")]
-    [SerializeField] private float bobSpeed = 2f;
+    [SerializeField] private float bobSpeed  = 2f;
     [SerializeField] private float bobHeight = 0.3f;
 
     private Vector3 startPosition;
@@ -28,7 +35,6 @@ public class ChestPickup : MonoBehaviour
     {
         if (!isOpened)
         {
-            // Bob up and down
             float newY = startPosition.y + Mathf.Sin(Time.time * bobSpeed) * bobHeight;
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
         }
@@ -37,57 +43,54 @@ public class ChestPickup : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && !isOpened)
-        {
             OpenChest(collision.gameObject);
-        }
     }
 
     private void OpenChest(GameObject player)
     {
         isOpened = true;
 
-        // Get random item
         ItemData item = RollForItem();
 
         if (item != null)
         {
-            PlayerStats stats = player.GetComponent<PlayerStats>();
-            if (stats != null)
+            // Route through ItemRevealUI — it handles pausing + AddItem on dismiss
+            if (ItemRevealUI.Instance != null)
+                ItemRevealUI.Instance.ShowItem(item, player);
+            else
             {
-                stats.AddItem(item);
+                // Fallback: add directly if UI isn't set up yet
+                PlayerStats stats = player.GetComponent<PlayerStats>();
+                stats?.AddItem(item);
             }
         }
 
-        // TODO: Particle effect, sound
+        // TODO: particle effect, sound
 
         Destroy(gameObject);
     }
 
     private ItemData RollForItem()
     {
-        float roll = Random.value;
+        float roll      = Random.value;
+        float rareChance = 1f - commonChance - uncommonChance;
 
-        if (roll <= rareChance && rareItems.Length > 0)
-        {
+        if (roll < rareChance && rareItems != null && rareItems.Length > 0)
             return rareItems[Random.Range(0, rareItems.Length)];
-        }
-        else if (roll <= rareChance + uncommonChance && uncommonItems.Length > 0)
-        {
+
+        if (roll < rareChance + uncommonChance && uncommonItems != null && uncommonItems.Length > 0)
             return uncommonItems[Random.Range(0, uncommonItems.Length)];
-        }
-        else if (commonItems.Length > 0)
-        {
+
+        if (commonItems != null && commonItems.Length > 0)
             return commonItems[Random.Range(0, commonItems.Length)];
-        }
 
         return null;
     }
 
-    // Allow setting items from DropManager
     public void SetItemPools(ItemData[] common, ItemData[] uncommon, ItemData[] rare)
     {
-        commonItems = common;
+        commonItems   = common;
         uncommonItems = uncommon;
-        rareItems = rare;
+        rareItems     = rare;
     }
 }

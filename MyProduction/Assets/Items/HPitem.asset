@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HPitem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: HPItem
-  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 6616176224829246732, guid: 20bd7ec2d2cbf024296950430ce10860, type: 3}
   rarity: 0
   damageBonus: 0
   attackSpeedBonus: 0

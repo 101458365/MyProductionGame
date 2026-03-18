@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DamageItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Damage
-  icon: {fileID: 0}
-  rarity: 2
+  icon: {fileID: 8549692267302808760, guid: 0e55875b913730742b07da211f5b76cd, type: 3}
+  rarity: 1
   damageBonus: 0.2
   attackSpeedBonus: 0
   maxHealthBonus: 0
   moveSpeedBonus: 0
-  description: 
+  description: Increases Damage by 2%

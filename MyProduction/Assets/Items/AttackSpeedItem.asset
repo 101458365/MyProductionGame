@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AttackSpeedItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: SpeedItem
-  icon: {fileID: -2413806693520163455, guid: a75c88ccd3b284b4caeda0993cd07b5b, type: 3}
-  rarity: 0
+  icon: {fileID: -8590751787396054470, guid: 65e5637dacf546942817eb328b4a6786, type: 3}
+  rarity: 2
   damageBonus: 0
   attackSpeedBonus: 0.1
   maxHealthBonus: 0

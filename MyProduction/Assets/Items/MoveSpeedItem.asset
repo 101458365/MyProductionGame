@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: MoveSpeedItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: MoveSpeedItem
-  icon: {fileID: -2413806693520163455, guid: a75c88ccd3b284b4caeda0993cd07b5b, type: 3}
+  icon: {fileID: 6427160142443645130, guid: 20bd7ec2d2cbf024296950430ce10860, type: 3}
   rarity: 0
   damageBonus: 0
   attackSpeedBonus: 0
   maxHealthBonus: 0
-  moveSpeedBonus: 0.1
-  description: 'Increase move speed by 10%
+  moveSpeedBonus: 0.05
+  description: 'Increase move speed by 5%
 
 
 '
