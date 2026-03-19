@@ -424,7 +424,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 238653951}
   m_HandleRect: {fileID: 0}
@@ -485,7 +485,9 @@ MonoBehaviour:
   uncommonItems:
   - {fileID: 11400000, guid: 555f4d5672595034f8370991f26880d0, type: 2}
   - {fileID: 11400000, guid: c6f3a263829e8cb4783c1f81f6c2d88d, type: 2}
-  rareItems: []
+  rareItems:
+  - {fileID: 11400000, guid: ecee4dfc11336444e80137afedfeb78b, type: 2}
+  - {fileID: 11400000, guid: 5029dcc27db141449af3040ac6463f11, type: 2}
   chestDropChance: 0
   baseXPAmount: 5
 --- !u!4 &230842086
@@ -737,7 +739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.8846364, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2124,7 +2126,7 @@ MonoBehaviour:
   showCountWhenOne: 1
   commonColor: {r: 0.85, g: 0.85, b: 0.85, a: 1}
   uncommonColor: {r: 0.1, g: 0.75, b: 0.1, a: 1}
-  rareColor: {r: 0.85, g: 0.2, b: 0.2, a: 1}
+  rareColor: {r: 0.55548143, g: 0, b: 1, a: 1}
 --- !u!1 &576343951
 GameObject:
   m_ObjectHideFlags: 0
@@ -3295,8 +3297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25c477045f86b84c8ef494e9881f6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  fallbackBaseDamage: 1
-  fallbackBaseAttackSpeed: 1
   fallbackBaseMoveSpeed: 5
 --- !u!114 &1105370553
 MonoBehaviour:
@@ -3324,6 +3324,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2293490750478542833, guid: 192b0fd74f55a7e4888e350beca79594, type: 3}
   m_PrefabInstance: {fileID: 5889365142900749785}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1105370567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105370536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b81359c26b248eb459fe0be4c3a76321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRegen
 --- !u!1 &1121555687
 GameObject:
   m_ObjectHideFlags: 0
@@ -3802,7 +3814,9 @@ MonoBehaviour:
   uncommonItems:
   - {fileID: 11400000, guid: 555f4d5672595034f8370991f26880d0, type: 2}
   - {fileID: 11400000, guid: c6f3a263829e8cb4783c1f81f6c2d88d, type: 2}
-  rareItems: []
+  rareItems:
+  - {fileID: 11400000, guid: ecee4dfc11336444e80137afedfeb78b, type: 2}
+  - {fileID: 11400000, guid: 5029dcc27db141449af3040ac6463f11, type: 2}
 --- !u!4 &1287079660
 Transform:
   m_ObjectHideFlags: 0
@@ -4598,7 +4612,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1636229288}
   m_HandleRect: {fileID: 0}
@@ -5001,7 +5015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 1, b: 0.067638874, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6895,6 +6909,10 @@ PrefabInstance:
       propertyPath: autoFireRate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3227741994799806615, guid: 192b0fd74f55a7e4888e350beca79594, type: 3}
+      propertyPath: aoeExplosionPrefab
+      value: 
+      objectReference: {fileID: 4371510863286800535, guid: 667860a69411f9e40ae2be5403f52b17, type: 3}
     - target: {fileID: 6910740973961375015, guid: 192b0fd74f55a7e4888e350beca79594, type: 3}
       propertyPath: m_Name
       value: Player
@@ -6933,6 +6951,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6910740973961375015, guid: 192b0fd74f55a7e4888e350beca79594, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1105370553}
+    - targetCorrespondingSourceObject: {fileID: 6910740973961375015, guid: 192b0fd74f55a7e4888e350beca79594, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1105370567}
   m_SourcePrefab: {fileID: 100100000, guid: 192b0fd74f55a7e4888e350beca79594, type: 3}
 --- !u!1001 &8078233961332684140
 PrefabInstance:

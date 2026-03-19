@@ -2,10 +2,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
-/// <summary>
-/// Updated ShopChest — routes item reveal through ItemRevealUI.
-/// Drop this in to REPLACE your existing ShopChest.cs
-/// </summary>
 public class ShopChest : MonoBehaviour
 {
     [Header("Cost")]
