@@ -1,12 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Updated ChestPickup — instead of silently adding an item to inventory,
-/// it now calls ItemRevealUI.ShowItem() which pauses the game and shows
-/// the player what they got before adding it.
-///
-/// Drop this in to REPLACE your existing ChestPickup.cs
-/// </summary>
 public class ChestPickup : MonoBehaviour
 {
     [Header("Item Pool")]

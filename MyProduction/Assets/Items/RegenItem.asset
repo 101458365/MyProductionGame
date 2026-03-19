@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72aa3aa745c782843bf2d67146d011a3, type: 3}
-  m_Name: AttackSpeedItem
+  m_Name: RegenItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: SpeedItem
-  icon: {fileID: -8590751787396054470, guid: 65e5637dacf546942817eb328b4a6786, type: 3}
-  rarity: 1
+  itemName: RegenItem
+  icon: {fileID: 8923873566673443635, guid: 65e5637dacf546942817eb328b4a6786, type: 3}
+  rarity: 2
   damageBonus: 0
-  attackSpeedBonus: 0.1
+  attackSpeedBonus: 0
   maxHealthBonus: 0
   moveSpeedBonus: 0
-  regenPerSecond: 0
+  regenPerSecond: 1
   isAOEItem: 0
-  description: 'Increase attack speed by 10%
+  description: 'Increase HP Regen  by +1hp/s
 
 
 '

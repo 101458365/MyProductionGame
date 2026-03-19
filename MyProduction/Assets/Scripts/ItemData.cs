@@ -9,10 +9,12 @@ public class ItemData : ScriptableObject
     public ItemRarity rarity;
 
     [Header("Stats Per Stack")]
-    public float damageBonus = 0f;
+    public float damageBonus      = 0f;
     public float attackSpeedBonus = 0f;
-    public float maxHealthBonus = 0f;
-    public float moveSpeedBonus = 0f;
+    public float maxHealthBonus   = 0f;
+    public float moveSpeedBonus   = 0f;
+    public float regenPerSecond   = 0f;  // HP regen added per stack (e.g. 1 = +1 HP/sec per stack)
+    public bool  isAOEItem        = false; // If true, all attacks trigger an AOE explosion
 
     [TextArea(3, 5)]
     public string description;
@@ -20,7 +22,7 @@ public class ItemData : ScriptableObject
 
 public enum ItemRarity
 {
-    Common,    // White - 70% drop rate
-    Uncommon,  // Green - 25% drop rate
-    Rare       // Red - 5% drop rate
+    Common,    // White
+    Uncommon,  // Green
+    Rare       // Red
 }
