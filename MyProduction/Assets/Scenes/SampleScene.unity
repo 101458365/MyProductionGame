@@ -1441,10 +1441,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c383a919e4aece4799799616b7783b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DifficultyManager
-  difficultyIncreaseInterval: 60
-  hpMultiplierPerTier: 0.2
-  damageMultiplierPerTier: 0.15
-  speedMultiplierPerTier: 0.1
+  difficultyIncreaseInterval: 30
+  hpMultiplierPerTier: 0.5
+  damageMultiplierPerTier: 0.2
+  speedMultiplierPerTier: 0.15
   spawnRateMultiplierPerTier: 0.15
   timerText: {fileID: 576343954}
   difficultyText: {fileID: 295943861}
@@ -2026,6 +2026,10 @@ MonoBehaviour:
     description: Move faster
     type: 3
     value: 0.2
+  - upgradeName: Dismantle
+    description: Summon a cursed slash that cuts through the nearest enemy
+    type: 5
+    value: 1
   - upgradeName: +1 Projectile
     description: Fire an additional projectile
     type: 4
@@ -3336,6 +3340,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81359c26b248eb459fe0be4c3a76321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRegen
+--- !u!114 &1105370568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105370536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22547d9d92a9d93479917e245b1f1919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DismantleAbility
+  dismantleSlashPrefab: {fileID: 3787761077154183767, guid: 0941b47333e7ccb49a4c8a7604eb2e14, type: 3}
+  baseCooldown: 1
+  targetRange: 20
+  damageMultiplier: 0.5
+  cooldownReductionPerStack: 0.1
+  minCooldown: 0.25
+  damagePerStack: 0.15
 --- !u!1 &1121555687
 GameObject:
   m_ObjectHideFlags: 0
@@ -5530,7 +5553,7 @@ MonoBehaviour:
   mapWidth: 250
   mapHeight: 250
   noiseScale: 12
-  waterThreshold: 0.3
+  waterThreshold: 0.2
   seed: 0
   octaves: 4
   persistence: 0.5
@@ -6954,6 +6977,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6910740973961375015, guid: 192b0fd74f55a7e4888e350beca79594, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1105370567}
+    - targetCorrespondingSourceObject: {fileID: 6910740973961375015, guid: 192b0fd74f55a7e4888e350beca79594, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1105370568}
   m_SourcePrefab: {fileID: 100100000, guid: 192b0fd74f55a7e4888e350beca79594, type: 3}
 --- !u!1001 &8078233961332684140
 PrefabInstance:

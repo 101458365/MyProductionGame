@@ -8,9 +8,9 @@ public class LevelUpUI : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private GameObject levelUpPanel;
-    [SerializeField] private Button choice1Button;
-    [SerializeField] private Button choice2Button;
-    [SerializeField] private Button choice3Button;
+    [SerializeField] private Button     choice1Button;
+    [SerializeField] private Button     choice2Button;
+    [SerializeField] private Button     choice3Button;
 
     [SerializeField] private TextMeshProUGUI choice1Text;
     [SerializeField] private TextMeshProUGUI choice2Text;
@@ -25,28 +25,20 @@ public class LevelUpUI : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
+        if (Instance == null) Instance = this;
 
         if (levelUpPanel != null)
-        {
             levelUpPanel.SetActive(false);
-        }
     }
 
     public void ShowLevelUpScreen()
     {
-        // Pause game
         Time.timeScale = 0f;
 
-        // Generate 3 random choices
         currentChoice1 = GetRandomUpgrade();
         currentChoice2 = GetRandomUpgrade();
         currentChoice3 = GetRandomUpgrade();
 
-        // Update button text
         if (choice1Text != null)
             choice1Text.text = $"{currentChoice1.upgradeName}\n<size=18>{currentChoice1.description}</size>";
         if (choice2Text != null)
@@ -54,30 +46,13 @@ public class LevelUpUI : MonoBehaviour
         if (choice3Text != null)
             choice3Text.text = $"{currentChoice3.upgradeName}\n<size=18>{currentChoice3.description}</size>";
 
-        // Show panel
         if (levelUpPanel != null)
-        {
             levelUpPanel.SetActive(true);
-        }
     }
 
-    public void OnChoice1Selected()
-    {
-        ApplyUpgrade(currentChoice1);
-        CloseLevelUpScreen();
-    }
-
-    public void OnChoice2Selected()
-    {
-        ApplyUpgrade(currentChoice2);
-        CloseLevelUpScreen();
-    }
-
-    public void OnChoice3Selected()
-    {
-        ApplyUpgrade(currentChoice3);
-        CloseLevelUpScreen();
-    }
+    public void OnChoice1Selected() { ApplyUpgrade(currentChoice1); CloseLevelUpScreen(); }
+    public void OnChoice2Selected() { ApplyUpgrade(currentChoice2); CloseLevelUpScreen(); }
+    public void OnChoice3Selected() { ApplyUpgrade(currentChoice3); CloseLevelUpScreen(); }
 
     private void ApplyUpgrade(StatUpgrade upgrade)
     {
@@ -92,20 +67,20 @@ public class LevelUpUI : MonoBehaviour
             case UpgradeType.MaxHealth:
                 playerLevel.IncreaseMaxHealth(upgrade.value);
                 break;
-
             case UpgradeType.Damage:
                 playerLevel.IncreaseDamage(upgrade.value);
                 break;
-
             case UpgradeType.AttackSpeed:
                 playerLevel.IncreaseAttackSpeed(upgrade.value);
                 break;
-
             case UpgradeType.MoveSpeed:
                 playerLevel.IncreaseMoveSpeed(upgrade.value);
                 break;
             case UpgradeType.ProjectileCount:
                 playerLevel.IncreaseProjectileCount((int)upgrade.value);
+                break;
+            case UpgradeType.Dismantle:
+                playerLevel.IncreaseDismantle((int)upgrade.value);
                 break;
         }
 
@@ -121,9 +96,8 @@ public class LevelUpUI : MonoBehaviour
     private void CloseLevelUpScreen()
     {
         if (levelUpPanel != null)
-        {
             levelUpPanel.SetActive(false);
-        }
+
         Time.timeScale = 1f;
     }
 }

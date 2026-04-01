@@ -6,7 +6,7 @@ public class DifficultyManager : MonoBehaviour
     public static DifficultyManager Instance;
 
     [Header("Difficulty Settings")]
-    [SerializeField] private float difficultyIncreaseInterval = 60f; // Every 60 seconds
+    [SerializeField] private float difficultyIncreaseInterval = 30f; // Every 30 seconds
     [SerializeField] private float hpMultiplierPerTier = 0.2f; // 20% more HP per tier
     [SerializeField] private float damageMultiplierPerTier = 0.15f; // 15% more damage per tier
     [SerializeField] private float speedMultiplierPerTier = 0.1f; // 10% more speed per tier
@@ -18,7 +18,7 @@ public class DifficultyManager : MonoBehaviour
 
     private int currentDifficultyTier = 0;
     private float gameTime = 0f;
-    private float nextDifficultyIncreaseTime = 60f;
+    private float nextDifficultyIncreaseTime = 30f;
 
     private void Awake()
     {

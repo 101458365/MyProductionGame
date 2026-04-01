@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PlayerLevel : MonoBehaviour
 {
@@ -8,7 +8,7 @@ public class PlayerLevel : MonoBehaviour
     [SerializeField] private int baseXPRequired = 10;
     [SerializeField] private float xpMultiplierPerLevel = 1.5f;
 
-    [Header("Base Stats (increased by level-up choices)")]
+    [Header("Base Stats")]
     [SerializeField] private float baseDamage = 1f;
     [SerializeField] private float baseAttackSpeed = 1f;
     [SerializeField] private float baseMoveSpeed = 5f;
@@ -17,10 +17,12 @@ public class PlayerLevel : MonoBehaviour
 
     private int xpRequiredForNextLevel;
     private PlayerStats playerStats;
+    private DismantleAbility dismantleAbility;
 
     private void Start()
     {
         playerStats = GetComponent<PlayerStats>();
+        dismantleAbility = GetComponent<DismantleAbility>();
         CalculateXPRequired();
     }
 
@@ -48,29 +50,22 @@ public class PlayerLevel : MonoBehaviour
             baseXPRequired * Mathf.Pow(xpMultiplierPerLevel, currentLevel - 1));
     }
 
-
     public void IncreaseDamage(float amount)
     {
         baseDamage += amount;
         Debug.Log($"Base Damage → {baseDamage}");
-        // Damage is read on-demand by PlayerShooting, no push needed.
     }
 
     public void IncreaseAttackSpeed(float amount)
     {
         baseAttackSpeed += amount;
         Debug.Log($"Base Attack Speed → {baseAttackSpeed}");
-        // Attack speed is also read on-demand, no push needed.
     }
 
     public void IncreaseMoveSpeed(float amount)
     {
         baseMoveSpeed += amount;
         Debug.Log($"Base Move Speed → {baseMoveSpeed}");
-
-        // Push the new speed immediately.
-        // If PlayerStats has item bonuses, let it recalculate with the new base.
-        // If there are no items yet, push directly to PlayerMovement.
         NotifyStatsChanged();
     }
 
@@ -83,26 +78,31 @@ public class PlayerLevel : MonoBehaviour
     public void IncreaseMaxHealth(float amount)
     {
         baseMaxHealth += amount;
-        PlayerHealth health = GetComponent<PlayerHealth>();
-        health?.IncreaseMaxHealth(amount);
+        GetComponent<PlayerHealth>()?.IncreaseMaxHealth(amount);
         Debug.Log($"Base Max Health → {baseMaxHealth}");
+    }
+
+    // Adds one Dismantle slash stack — unlocks the ability on first pick
+    public void IncreaseDismantle(int amount)
+    {
+        if (dismantleAbility == null)
+        {
+            Debug.LogWarning("[PlayerLevel] DismantleAbility component not found on Player!");
+            return;
+        }
+
+        for (int i = 0; i < amount; i++)
+            dismantleAbility.AddStack();
+
+        Debug.Log($"Dismantle unlocked — slash count mirrors projectile count.");
     }
 
     private void NotifyStatsChanged()
     {
         if (playerStats != null)
-        {
-            // Trigger a recalc by adding 0 of the first inventory item —
-            // cleanest way without exposing a public Recalculate() method
-            // is to just call a dedicated refresh.
             playerStats.RefreshStats();
-        }
         else
-        {
-            // No items yet — push speed directly
-            PlayerMovement movement = GetComponent<PlayerMovement>();
-            movement?.SetMoveSpeed(baseMoveSpeed);
-        }
+            GetComponent<PlayerMovement>()?.SetMoveSpeed(baseMoveSpeed);
     }
 
     public int CurrentLevel => currentLevel;
