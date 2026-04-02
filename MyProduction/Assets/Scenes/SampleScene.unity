@@ -289,7 +289,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -3353,9 +3353,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DismantleAbility
   dismantleSlashPrefab: {fileID: 3787761077154183767, guid: 0941b47333e7ccb49a4c8a7604eb2e14, type: 3}
+  aoeExplosionPrefab: {fileID: 4371510863286800535, guid: 667860a69411f9e40ae2be5403f52b17, type: 3}
   baseCooldown: 1
   targetRange: 20
   damageMultiplier: 0.5
+  slashesPerTarget: 5
+  minAngleBetweenSlashes: 5
+  maxAngleBetweenSlashes: 175
   cooldownReductionPerStack: 0.1
   minCooldown: 0.25
   damagePerStack: 0.15
@@ -6090,7 +6094,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16

@@ -1,19 +1,29 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DismantleSlash : MonoBehaviour
 {
     [Header("Animation")]
-    [SerializeField] private float slashDistance = 4f;
+    [SerializeField] private float minSlashDistance = 1f;
+    [SerializeField] private float maxSlashDistance = 3f;
     [SerializeField] private float slashSpeed = 6f;
     [SerializeField] private float lifetime = 1f;
 
-    private GameObject target;
+    [Header("Hit Detection")]
+    [SerializeField] private float hitRadius = 0.4f;
+
+    private GameObject primaryTarget;
     private float damage;
     private Vector3 destination;
-    private bool hasDealtDamage = false;
     private float timer = 0f;
     private Vector3 originalScale;
+
+    // AOE
+    private GameObject aoeExplosionPrefab;
+    private int aoeStacks = 0;
+
+    private HashSet<GameObject> hitEnemies = new HashSet<GameObject>();
 
     private SpriteRenderer spriteRenderer;
     private TrailRenderer trailRenderer;
@@ -25,33 +35,31 @@ public class DismantleSlash : MonoBehaviour
         originalScale = transform.localScale;
     }
 
-    // spawnerPosition = player position, used to calculate the slash angle
-    public void Initialise(GameObject slashTarget, float slashDamage, Vector3 spawnerPosition)
+    public void Initialise(GameObject slashTarget, float slashDamage, Vector3 spawnerPosition,
+                           float angleOffset = 0f, GameObject aoePrefab = null, int aoeStackCount = 0)
     {
-        target = slashTarget;
+        primaryTarget = slashTarget;
         damage = slashDamage;
+        aoeExplosionPrefab = aoePrefab;
+        aoeStacks = aoeStackCount;
 
-        if (target == null)
+        if (primaryTarget == null)
         {
             Destroy(gameObject, lifetime);
             return;
         }
 
-        // Calculate direction BEFORE repositioning the slash
-        // Using player position avoids the zero-vector problem from spawning at the enemy
-        Vector3 toEnemy = (target.transform.position - spawnerPosition).normalized;
-        Vector3 slashDir = new Vector3(-toEnemy.y, toEnemy.x, 0f).normalized;
+        Vector3 toEnemy = (primaryTarget.transform.position - spawnerPosition).normalized;
+        Vector3 baseSlashDir = new Vector3(-toEnemy.y, toEnemy.x, 0f).normalized;
+        Vector3 slashDir = Quaternion.Euler(0f, 0f, angleOffset) * baseSlashDir;
 
-        // Start on one side of the enemy, destination on the other side
-        transform.position = target.transform.position - slashDir * (slashDistance * 0.5f);
-        destination = target.transform.position + slashDir * (slashDistance * 0.5f);
+        float slashDistance = Random.Range(minSlashDistance, maxSlashDistance);
+        transform.position = primaryTarget.transform.position - slashDir * (slashDistance * 0.5f);
+        destination = primaryTarget.transform.position + slashDir * (slashDistance * 0.5f);
 
         float angle = Mathf.Atan2(slashDir.y, slashDir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
-
         transform.localScale = originalScale;
-
-        Debug.Log($"[Slash] Start: {transform.position} Dest: {destination} Dir: {slashDir}");
 
         StartCoroutine(SlashRoutine());
     }
@@ -68,18 +76,14 @@ public class DismantleSlash : MonoBehaviour
                 slashSpeed * Time.deltaTime
             );
 
+            CheckHits();
+
             if (spriteRenderer != null)
             {
                 float t = timer / lifetime;
                 Color c = spriteRenderer.color;
                 c.a = Mathf.Lerp(1f, 0f, t * 1.5f);
                 spriteRenderer.color = c;
-            }
-
-            if (!hasDealtDamage && target != null)
-            {
-                if (Vector2.Distance(transform.position, target.transform.position) < 0.5f)
-                    DealDamage();
             }
 
             yield return null;
@@ -94,13 +98,32 @@ public class DismantleSlash : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void DealDamage()
+    private void CheckHits()
     {
-        hasDealtDamage = true;
-        if (target == null) return;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, hitRadius);
 
-        target.GetComponent<EnemyHealth>()?.TakeDamage(damage);
-        CameraShake.Instance?.Shake(0.08f, 0.1f);
-        Debug.Log($"[Dismantle] Hit {target.name} for {damage} damage.");
+        foreach (Collider2D hit in hits)
+        {
+            if (!hit.CompareTag("Enemy")) continue;
+
+            GameObject enemy = hit.gameObject;
+            if (hitEnemies.Contains(enemy)) continue;
+
+            hitEnemies.Add(enemy);
+
+            EnemyHealth health = enemy.GetComponent<EnemyHealth>();
+            if (health != null)
+            {
+                health.TakeDamage(damage);
+                Debug.Log($"[Dismantle] Hit {enemy.name} for {damage} damage.");
+
+                // Proc AOE if player has AOE item stacks
+                if (aoeExplosionPrefab != null && aoeStacks > 0)
+                {
+                    GameObject explosion = Instantiate(aoeExplosionPrefab, enemy.transform.position, Quaternion.identity);
+                    explosion.GetComponent<AOEExplosion>()?.Initialise(damage, aoeStacks);
+                }
+            }
+        }
     }
 }

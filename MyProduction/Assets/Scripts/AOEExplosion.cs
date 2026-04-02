@@ -3,31 +3,38 @@ using UnityEngine;
 public class AOEExplosion : MonoBehaviour
 {
     [Header("Base Settings")]
-    [SerializeField] private float baseRadius       = 2f;    // radius with 1 AOE stack
-    [SerializeField] private float radiusPerStack   = 0.5f;  // added radius per additional stack
-    [SerializeField] private float explosionLifetime = 0.2f; // how long before self-destruct
+    [SerializeField] private float baseRadius = 2f;
+    [SerializeField] private float radiusPerStack = 0.5f;
+    [SerializeField] private float explosionLifetime = 0.2f;
+
+    [Header("Damage")]
+    // AOE deals this percentage of the damage that triggered it
+    // 0.3 = 30% of hit damage — strong enough to feel impactful, not a one-shot
+    [SerializeField] private float damagePercent = 0.3f;
 
     [Header("Visual Scale")]
-    [SerializeField] private bool scaleVisualToRadius = true; // scale sprite to match radius
+    [SerializeField] private bool scaleVisualToRadius = true;
 
-    private float damage     = 1f;
-    private int   aoeStacks  = 1;
+    private float damage = 1f;
+    private int aoeStacks = 1;
     private float finalRadius;
 
-    // Called immediately after instantiation by Projectile or PlayerShooting
-    public void Initialise(float dmg, int stacks)
+    private void Awake()
     {
-        damage    = dmg;
+        Destroy(gameObject, explosionLifetime + 0.5f);
+    }
+
+    public void Initialise(float triggerDamage, int stacks)
+    {
+        // AOE damage is a percentage of whatever damage triggered it
+        damage = triggerDamage * damagePercent;
         aoeStacks = Mathf.Max(1, stacks);
         finalRadius = baseRadius + (radiusPerStack * (aoeStacks - 1));
 
         if (scaleVisualToRadius)
             transform.localScale = Vector3.one * finalRadius;
 
-        // Apply damage immediately to all enemies in radius
         Explode();
-
-        // Destroy after a short lifetime (long enough for particles to play)
         Destroy(gameObject, explosionLifetime);
     }
 
@@ -35,6 +42,7 @@ public class AOEExplosion : MonoBehaviour
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, finalRadius);
 
+        int hitCount = 0;
         foreach (Collider2D hit in hits)
         {
             if (!hit.CompareTag("Enemy")) continue;
@@ -43,9 +51,12 @@ public class AOEExplosion : MonoBehaviour
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(damage);
-                Debug.Log($"[AOE] Hit {hit.name} for {damage} dmg (radius {finalRadius}, stacks {aoeStacks})");
+                hitCount++;
+                Debug.Log($"[AOE] Hit {hit.name} for {damage} dmg ({damagePercent * 100f}% of trigger, radius {finalRadius})");
             }
         }
+
+        Debug.Log($"[AOE] Explosion hit {hitCount} enemies, radius {finalRadius}");
     }
 
     private void OnDrawGizmosSelected()
