@@ -15,8 +15,10 @@ MonoBehaviour:
   itemName: Damage
   icon: {fileID: 8549692267302808760, guid: 0e55875b913730742b07da211f5b76cd, type: 3}
   rarity: 1
-  damageBonus: 0.2
+  damageBonus: 0.1
   attackSpeedBonus: 0
   maxHealthBonus: 0
   moveSpeedBonus: 0
-  description: Increases Damage by 2%
+  regenPerSecond: 0
+  isAOEItem: 0
+  description: Increases Damage by 10%

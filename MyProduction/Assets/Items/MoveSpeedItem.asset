@@ -18,8 +18,10 @@ MonoBehaviour:
   damageBonus: 0
   attackSpeedBonus: 0
   maxHealthBonus: 0
-  moveSpeedBonus: 0.05
-  description: 'Increase move speed by 5%
+  moveSpeedBonus: 0.01
+  regenPerSecond: 0
+  isAOEItem: 0
+  description: 'Increase move speed by 1%
 
 
 '

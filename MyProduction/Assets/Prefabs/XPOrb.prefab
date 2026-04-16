@@ -106,8 +106,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::XPPickup
   xpAmount: 5
-  magnetRange: 5
-  magnetSpeed: 15
+  magnetRange: 2
+  minSpeed: 5
+  maxSpeed: 10
 --- !u!58 &255623098548871311
 CircleCollider2D:
   m_ObjectHideFlags: 0

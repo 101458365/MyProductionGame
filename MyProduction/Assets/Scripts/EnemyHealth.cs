@@ -100,7 +100,7 @@ public class EnemyHealth : MonoBehaviour
         Color original = sr.color;
 
         // Elites flash gold instead of white
-        sr.color = isElite ? new Color(1f, 0.85f, 0f) : Color.white;
+        sr.color = isElite ? new Color(1f, 0.85f, 0f) : Color.red;
         yield return new WaitForSeconds(0.1f);
         sr.color = original;
     }

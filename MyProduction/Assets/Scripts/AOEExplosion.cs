@@ -5,15 +5,13 @@ public class AOEExplosion : MonoBehaviour
     [Header("Base Settings")]
     [SerializeField] private float baseRadius = 2f;
     [SerializeField] private float radiusPerStack = 0.5f;
-    [SerializeField] private float explosionLifetime = 0.2f;
 
     [Header("Damage")]
-    // AOE deals this percentage of the damage that triggered it
-    // 0.3 = 30% of hit damage — strong enough to feel impactful, not a one-shot
     [SerializeField] private float damagePercent = 0.3f;
 
     [Header("Visual Scale")]
-    [SerializeField] private bool scaleVisualToRadius = true;
+    // The sprite animation will scale from this fraction of finalRadius up to finalRadius
+    [SerializeField] private float startScaleFraction = 0.15f;
 
     private float damage = 1f;
     private int aoeStacks = 1;
@@ -21,21 +19,21 @@ public class AOEExplosion : MonoBehaviour
 
     private void Awake()
     {
-        Destroy(gameObject, explosionLifetime + 0.5f);
+        Destroy(gameObject, 2f);
     }
 
     public void Initialise(float triggerDamage, int stacks)
     {
-        // AOE damage is a percentage of whatever damage triggered it
         damage = triggerDamage * damagePercent;
         aoeStacks = Mathf.Max(1, stacks);
         finalRadius = baseRadius + (radiusPerStack * (aoeStacks - 1));
 
-        if (scaleVisualToRadius)
-            transform.localScale = Vector3.one * finalRadius;
+        // Tell the animation how big to grow based on actual radius
+        SpriteSwapAnimation anim = GetComponent<SpriteSwapAnimation>();
+        if (anim != null)
+            anim.SetScale(finalRadius * startScaleFraction, finalRadius);
 
         Explode();
-        Destroy(gameObject, explosionLifetime);
     }
 
     private void Explode()
@@ -52,7 +50,7 @@ public class AOEExplosion : MonoBehaviour
             {
                 enemyHealth.TakeDamage(damage);
                 hitCount++;
-                Debug.Log($"[AOE] Hit {hit.name} for {damage} dmg ({damagePercent * 100f}% of trigger, radius {finalRadius})");
+                Debug.Log($"[AOE] Hit {hit.name} for {damage} dmg (radius {finalRadius})");
             }
         }
 

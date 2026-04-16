@@ -6,7 +6,6 @@ public class DismantleAbility : MonoBehaviour
 {
     [Header("Prefab")]
     [SerializeField] private GameObject dismantleSlashPrefab;
-    [SerializeField] private GameObject aoeExplosionPrefab;  // same prefab as PlayerShooting uses
 
     [Header("Settings")]
     [SerializeField] private float baseCooldown = 1f;
@@ -65,19 +64,13 @@ public class DismantleAbility : MonoBehaviour
         float totalDamage = CalculateDamage();
         float damagePerSlash = totalDamage / slashesPerTarget;
 
-        // Get AOE stacks from PlayerStats
-        int aoStacks = (playerStats != null && playerStats.HasAOE) ? playerStats.AOEStacks : 0;
-        GameObject aoePrefab = (aoStacks > 0) ? aoeExplosionPrefab : null;
-
         foreach (GameObject target in targets)
-            StartCoroutine(SlashBurstRoutine(target, damagePerSlash, aoePrefab, aoStacks));
+            StartCoroutine(SlashBurstRoutine(target, damagePerSlash));
 
-        Debug.Log($"[Dismantle] Fired {slashesPerTarget} slashes at {targets.Count} target(s). " +
-                  $"{damagePerSlash:F2} dmg each. AOE stacks: {aoStacks}");
+        Debug.Log($"[Dismantle] Fired {slashesPerTarget} slashes at {targets.Count} target(s). {damagePerSlash:F2} dmg each.");
     }
 
-    private IEnumerator SlashBurstRoutine(GameObject target, float damagePerSlash,
-                                          GameObject aoePrefab, int aoStacks)
+    private IEnumerator SlashBurstRoutine(GameObject target, float damagePerSlash)
     {
         float angleBetweenSlashes = Random.Range(minAngleBetweenSlashes, maxAngleBetweenSlashes);
         float totalSpread = angleBetweenSlashes * (slashesPerTarget - 1);
@@ -90,8 +83,7 @@ public class DismantleAbility : MonoBehaviour
             float angleOffset = startAngle + (angleBetweenSlashes * i);
 
             GameObject slashObj = Instantiate(dismantleSlashPrefab, transform.position, Quaternion.identity);
-            slashObj.GetComponent<DismantleSlash>()?.Initialise(
-                target, damagePerSlash, transform.position, angleOffset, aoePrefab, aoStacks);
+            slashObj.GetComponent<DismantleSlash>()?.Initialise(target, damagePerSlash, transform.position, angleOffset);
 
             yield return new WaitForSeconds(0.08f);
         }

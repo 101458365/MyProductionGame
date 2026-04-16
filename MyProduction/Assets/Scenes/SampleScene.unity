@@ -479,17 +479,23 @@ MonoBehaviour:
   chestPrefab: {fileID: 5971595438125861418, guid: bc0fa22c48f07b74fbd62e6f71f215d6, type: 3}
   xpOrbPrefab: {fileID: 1964118809859220732, guid: dfb799e798bb0e145acb4e56aa966c19, type: 3}
   goldOrbPrefab: {fileID: 1964118809859220732, guid: 561a80e5195201348961303d51c8de5c, type: 3}
+  healPickupPrefab: {fileID: 5511946378697084308, guid: fd66962f4b7a3154ab8728b3c4010196, type: 3}
+  magnetPickupPrefab: {fileID: 8026584974050641923, guid: f5b68186709a9be41a4fa1778529426e, type: 3}
   commonItems:
-  - {fileID: 11400000, guid: f9ac3b2663457c24d816b0185ab5cbe3, type: 2}
   - {fileID: 11400000, guid: 75ee4143d09ceca42bc2d4e7e4b9550e, type: 2}
-  uncommonItems:
   - {fileID: 11400000, guid: 555f4d5672595034f8370991f26880d0, type: 2}
+  - {fileID: 11400000, guid: f9ac3b2663457c24d816b0185ab5cbe3, type: 2}
+  uncommonItems:
   - {fileID: 11400000, guid: c6f3a263829e8cb4783c1f81f6c2d88d, type: 2}
   rareItems:
   - {fileID: 11400000, guid: ecee4dfc11336444e80137afedfeb78b, type: 2}
   - {fileID: 11400000, guid: 5029dcc27db141449af3040ac6463f11, type: 2}
   chestDropChance: 0
-  baseXPAmount: 5
+  eliteChestChance: 0.05
+  eliteHealChance: 0.05
+  eliteMagnetChance: 0.05
+  eliteNothingChance: 0.85
+  baseXPAmount: 10
 --- !u!4 &230842086
 Transform:
   m_ObjectHideFlags: 0
@@ -1442,9 +1448,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DifficultyManager
   difficultyIncreaseInterval: 30
-  hpMultiplierPerTier: 0.5
-  damageMultiplierPerTier: 0.2
-  speedMultiplierPerTier: 0.15
+  hpMultiplierPerTier: 0.1
+  damageMultiplierPerTier: 0.05
+  speedMultiplierPerTier: 0.1
   spawnRateMultiplierPerTier: 0.15
   timerText: {fileID: 576343954}
   difficultyText: {fileID: 295943861}
@@ -1880,6 +1886,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1973,6 +1980,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febedce4267504846a6798ce0aa13ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraShake
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &558847775
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,7 +3368,7 @@ MonoBehaviour:
   currentLevel: 1
   currentXP: 0
   baseXPRequired: 10
-  xpMultiplierPerLevel: 1.5
+  xpMultiplierPerLevel: 1.25
   baseDamage: 1
   baseAttackSpeed: 1
   baseMoveSpeed: 5
@@ -3353,7 +3404,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DismantleAbility
   dismantleSlashPrefab: {fileID: 3787761077154183767, guid: 0941b47333e7ccb49a4c8a7604eb2e14, type: 3}
-  aoeExplosionPrefab: {fileID: 4371510863286800535, guid: 667860a69411f9e40ae2be5403f52b17, type: 3}
   baseCooldown: 1
   targetRange: 20
   damageMultiplier: 0.5
@@ -3831,15 +3881,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopChestSpawner
   shopChestPrefab: {fileID: 7315779114453153668, guid: ea7e8c83210cdd34b8f966aafbd79de8, type: 3}
-  chestCount: 100
+  chestCount: 25
   minDistanceBetweenChests: 10
   minDistanceFromPlayer: 8
   maxPlacementAttempts: 50
   commonItems:
-  - {fileID: 11400000, guid: f9ac3b2663457c24d816b0185ab5cbe3, type: 2}
   - {fileID: 11400000, guid: 75ee4143d09ceca42bc2d4e7e4b9550e, type: 2}
-  uncommonItems:
+  - {fileID: 11400000, guid: f9ac3b2663457c24d816b0185ab5cbe3, type: 2}
   - {fileID: 11400000, guid: 555f4d5672595034f8370991f26880d0, type: 2}
+  uncommonItems:
   - {fileID: 11400000, guid: c6f3a263829e8cb4783c1f81f6c2d88d, type: 2}
   rareItems:
   - {fileID: 11400000, guid: ecee4dfc11336444e80137afedfeb78b, type: 2}
@@ -5370,7 +5420,7 @@ MonoBehaviour:
   initialSpawnRate: 2
   minimumSpawnRate: 0.3
   spawnRateDecreaseOverTime: 0.05
-  spawnAreaSize: {x: 20, y: 8}
+  spawnAreaSize: {x: 15, y: 15}
   minDistanceFromPlayer: 4
   maxSpawnAttempts: 15
   useMapBoundsForSpawning: 1
@@ -5383,7 +5433,7 @@ Transform:
   m_GameObject: {fileID: 1672509756}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.07, y: 1.19, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5559,13 +5609,13 @@ MonoBehaviour:
   noiseScale: 12
   waterThreshold: 0.2
   seed: 0
-  octaves: 4
+  octaves: 16
   persistence: 0.5
   lacunarity: 2
   smoothingPasses: 3
   neighboursRequiredForWater: 5
-  falloffStrength: 0.55
-  falloffCurve: 2.2
+  falloffStrength: 0.6
+  falloffCurve: 2
   groundTilemap: {fileID: 1799184845}
   waterTilemap: {fileID: 40704207}
   decorationTilemap: {fileID: 0}

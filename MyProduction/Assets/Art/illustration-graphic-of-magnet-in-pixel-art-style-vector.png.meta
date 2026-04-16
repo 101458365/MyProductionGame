@@ -1,0 +1,598 @@
+fileFormatVersion: 2
+guid: 8c1968c43cbd21b45b2545931eae3128
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 596179766013864177
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_0
+  - first:
+      213: -740942220550176372
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_1
+  - first:
+      213: 5246771528159018797
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_2
+  - first:
+      213: 6514756654687411247
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_3
+  - first:
+      213: 4409283622989965988
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_4
+  - first:
+      213: 733087126932817967
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_5
+  - first:
+      213: -3579326527648565216
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_6
+  - first:
+      213: -5995428022414619411
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_7
+  - first:
+      213: 9187895190343508906
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_8
+  - first:
+      213: 7271779485114496641
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_9
+  - first:
+      213: 4114693399786808217
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_10
+  - first:
+      213: 9073350069968391224
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_11
+  - first:
+      213: 4987199589402714736
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_12
+  - first:
+      213: -8704006618839630526
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_13
+  - first:
+      213: -7342725627921228547
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_14
+  - first:
+      213: -1133089391444228765
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_15
+  - first:
+      213: -2170558814367288577
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_16
+  - first:
+      213: 6677058389570648491
+    second: illustration-graphic-of-magnet-in-pixel-art-style-vector_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1500
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_0
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 225
+        width: 877
+        height: 1010
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f82887a65e064800800000000000000
+      internalID: 596179766013864177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_1
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 123
+        width: 36
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c818401e9f4a7b5f0800000000000000
+      internalID: -740942220550176372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_2
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 157
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2f3d8108e640d840800000000000000
+      internalID: 5246771528159018797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_3
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 89
+        width: 72
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2c51c829a0196a50800000000000000
+      internalID: 6514756654687411247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_4
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 157
+        width: 35
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4aaa34ef71ce03d30800000000000000
+      internalID: 4409283622989965988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_5
+      rect:
+        serializedVersion: 2
+        x: 873
+        y: 157
+        width: 39
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f280e3e9bd27c2a00800000000000000
+      internalID: 733087126932817967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_6
+      rect:
+        serializedVersion: 2
+        x: 908
+        y: 123
+        width: 38
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 028ff58bc7da35ec0800000000000000
+      internalID: -3579326527648565216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_7
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 155
+        width: 36
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: deccd8f8af5fbcca0800000000000000
+      internalID: -5995428022414619411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_8
+      rect:
+        serializedVersion: 2
+        x: 1007
+        y: 123
+        width: 38
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa3e1fdfef5f18f70800000000000000
+      internalID: 9187895190343508906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_9
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 58
+        width: 67
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 186f8370aec8ae460800000000000000
+      internalID: 7271779485114496641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_10
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 58
+        width: 38
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 993efe5b8d35a1930800000000000000
+      internalID: 4114693399786808217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_11
+      rect:
+        serializedVersion: 2
+        x: 873
+        y: 89
+        width: 39
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83c4b33e0d30bed70800000000000000
+      internalID: 9073350069968391224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_12
+      rect:
+        serializedVersion: 2
+        x: 907
+        y: 58
+        width: 38
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 072a25e6a97163540800000000000000
+      internalID: 4987199589402714736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_13
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 58
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24d3a619818253780800000000000000
+      internalID: -8704006618839630526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_14
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 24
+        width: 38
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfc1990e1f5691a90800000000000000
+      internalID: -7342725627921228547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_15
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 24
+        width: 38
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 365043ca3357640f0800000000000000
+      internalID: -1133089391444228765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_16
+      rect:
+        serializedVersion: 2
+        x: 873
+        y: 24
+        width: 39
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff27b892240a0e1e0800000000000000
+      internalID: -2170558814367288577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: illustration-graphic-of-magnet-in-pixel-art-style-vector_17
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 24
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba976ee8a3da9ac50800000000000000
+      internalID: 6677058389570648491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_0: 596179766013864177
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_1: -740942220550176372
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_10: 4114693399786808217
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_11: 9073350069968391224
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_12: 4987199589402714736
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_13: -8704006618839630526
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_14: -7342725627921228547
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_15: -1133089391444228765
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_16: -2170558814367288577
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_17: 6677058389570648491
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_2: 5246771528159018797
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_3: 6514756654687411247
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_4: 4409283622989965988
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_5: 733087126932817967
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_6: -3579326527648565216
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_7: -5995428022414619411
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_8: 9187895190343508906
+      illustration-graphic-of-magnet-in-pixel-art-style-vector_9: 7271779485114496641
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

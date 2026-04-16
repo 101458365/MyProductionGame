@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1945634734721896570}
   - component: {fileID: 8092581243486455157}
   - component: {fileID: -5048228350109679176}
+  - component: {fileID: -7456162304492482113}
   m_Layer: 0
   m_Name: AOE_Explosion
   m_TagString: Untagged
@@ -79,9 +80,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.027322773, b: 0, a: 0.28235295}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -4913982344839117222, guid: 8c16061fd686a2d46b529c2b0b1159d2, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,7 +104,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ff332cc3dc72542ac9030dc6222867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AOEExplosion
-  baseRadius: 2
+  baseRadius: 1
   radiusPerStack: 0.5
-  explosionLifetime: 0.2
-  scaleVisualToRadius: 1
+  damagePercent: 0.3
+  startScaleFraction: 0.15
+--- !u!114 &-7456162304492482113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4371510863286800535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81f552d0418cecb4f8c29c162d4a5224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteSwapAnimation
+  frames:
+  - {fileID: -4913982344839117222, guid: 8c16061fd686a2d46b529c2b0b1159d2, type: 3}
+  - {fileID: -575696589628924425, guid: 4a9f48cfc67c480428bc9a7f765db4c7, type: 3}
+  - {fileID: -1679085568475732275, guid: e792424878b919942bb1c08bec7345c9, type: 3}
+  - {fileID: -4960229840327395196, guid: 401bc9afea4e99842bd17e5607e20594, type: 3}
+  - {fileID: -8398409672689469449, guid: cec24451b6aba894db53a23b231ed6eb, type: 3}
+  - {fileID: -6658418643737043593, guid: 3238dde473694e84cb4dab2dff9e652e, type: 3}
+  - {fileID: 6490354421893865411, guid: 2ca53f802ae15c14da11e4ea2b73855a, type: 3}
+  - {fileID: -3047093270054505527, guid: 24be8e5000f53b949829d8b4307f3a16, type: 3}
+  - {fileID: 417835678940605132, guid: c744897b258522147b101c85cc16ff9b, type: 3}
+  - {fileID: 6216626595070851197, guid: 1a8d56d856b0ee744acea8a9124fa4dc, type: 3}
+  - {fileID: -609197253124883428, guid: b02946fb9b94f854aab27c32d5dfb7e1, type: 3}
+  frameRate: 12
+  destroyOnFinish: 1
+  scaleUp: 1
+  startScale: 0.3
+  endScale: 1.5

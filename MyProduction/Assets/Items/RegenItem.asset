@@ -19,9 +19,9 @@ MonoBehaviour:
   attackSpeedBonus: 0
   maxHealthBonus: 0
   moveSpeedBonus: 0
-  regenPerSecond: 1
+  regenPerSecond: 0.01
   isAOEItem: 0
-  description: 'Increase HP Regen  by +1hp/s
+  description: 'Increase HP Regen  by +1% per second
 
 
 '

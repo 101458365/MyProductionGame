@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class PlayerRegen : MonoBehaviour
 {
-    private float regenPerSecond = 0f;
-    private float regenTimer     = 0f;
+    // regenPerSecond is now treated as a % of max HP per second
+    // e.g. 0.02 = 2% of max HP per second per stack
+    private float regenPercent = 0f;
+    private float regenTimer = 0f;
 
     private PlayerHealth playerHealth;
 
@@ -14,34 +16,31 @@ public class PlayerRegen : MonoBehaviour
 
     private void Update()
     {
-        // No regen to apply
-        if (regenPerSecond <= 0f) return;
-
-        // Don't regen while dead / game over
+        if (regenPercent <= 0f) return;
         if (playerHealth == null) return;
 
         regenTimer += Time.deltaTime;
 
-        // Tick once per second
         if (regenTimer >= 1f)
         {
             regenTimer -= 1f;
 
-            // Only heal if not already at max
             if (playerHealth.CurrentHealth < playerHealth.MaxHealth)
             {
-                playerHealth.Heal(regenPerSecond);
-                Debug.Log($"[PlayerRegen] Healed {regenPerSecond} HP. " +
-                          $"Now: {playerHealth.CurrentHealth}/{playerHealth.MaxHealth}");
+                float healAmount = playerHealth.MaxHealth * regenPercent;
+                playerHealth.Heal(healAmount);
+                Debug.Log($"[PlayerRegen] Healed {healAmount:F1} HP " +
+                          $"({regenPercent * 100f:F1}% of {playerHealth.MaxHealth} max HP)");
             }
         }
     }
 
-    /// <summary>Called by PlayerStats whenever items change.</summary>
-    public void SetRegenRate(float rate)
+    // Called by PlayerStats — passes total regen percent across all stacks
+    // e.g. 3 stacks at 0.02 each = 0.06 = 6% max HP per second
+    public void SetRegenRate(float percent)
     {
-        regenPerSecond = rate;
+        regenPercent = percent;
     }
 
-    public float RegenPerSecond => regenPerSecond;
+    public float RegenPercent => regenPercent;
 }

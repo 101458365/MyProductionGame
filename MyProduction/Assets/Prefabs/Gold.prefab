@@ -142,8 +142,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoldPickup
   goldAmount: 3
-  magnetRange: 6
-  magnetSpeed: 14
+  magnetRange: 2
+  minSpeed: 5
+  maxSpeed: 10
 --- !u!1 &8414721061414061352
 GameObject:
   m_ObjectHideFlags: 0

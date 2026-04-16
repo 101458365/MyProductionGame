@@ -19,10 +19,6 @@ public class DismantleSlash : MonoBehaviour
     private float timer = 0f;
     private Vector3 originalScale;
 
-    // AOE
-    private GameObject aoeExplosionPrefab;
-    private int aoeStacks = 0;
-
     private HashSet<GameObject> hitEnemies = new HashSet<GameObject>();
 
     private SpriteRenderer spriteRenderer;
@@ -35,13 +31,10 @@ public class DismantleSlash : MonoBehaviour
         originalScale = transform.localScale;
     }
 
-    public void Initialise(GameObject slashTarget, float slashDamage, Vector3 spawnerPosition,
-                           float angleOffset = 0f, GameObject aoePrefab = null, int aoeStackCount = 0)
+    public void Initialise(GameObject slashTarget, float slashDamage, Vector3 spawnerPosition, float angleOffset = 0f)
     {
         primaryTarget = slashTarget;
         damage = slashDamage;
-        aoeExplosionPrefab = aoePrefab;
-        aoeStacks = aoeStackCount;
 
         if (primaryTarget == null)
         {
@@ -116,13 +109,6 @@ public class DismantleSlash : MonoBehaviour
             {
                 health.TakeDamage(damage);
                 Debug.Log($"[Dismantle] Hit {enemy.name} for {damage} damage.");
-
-                // Proc AOE if player has AOE item stacks
-                if (aoeExplosionPrefab != null && aoeStacks > 0)
-                {
-                    GameObject explosion = Instantiate(aoeExplosionPrefab, enemy.transform.position, Quaternion.identity);
-                    explosion.GetComponent<AOEExplosion>()?.Initialise(damage, aoeStacks);
-                }
             }
         }
     }

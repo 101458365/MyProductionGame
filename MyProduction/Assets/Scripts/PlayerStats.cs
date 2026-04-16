@@ -8,28 +8,28 @@ public class PlayerStats : MonoBehaviour
 
     private Dictionary<ItemData, int> inventory = new Dictionary<ItemData, int>();
 
-    // Multipliers from items
-    private float totalDamageMultiplier     = 1f;
+    private float totalDamageMultiplier = 1f;
     private float totalAttackSpeedMultiplier = 1f;
-    private float totalMoveSpeedMultiplier  = 1f;
+    private float totalMoveSpeedMultiplier = 1f;
 
-    // Additive stats from items
-    private float totalRegenPerSecond = 0f;  // total HP/sec from all regen items
-    private int   totalAOEStacks      = 0;   // how many AOE items the player has
+    // Total regen as a fraction of max HP per second
+    // e.g. 3 stacks at 0.02 = 0.06 = 6% max HP/sec
+    private float totalRegenPercent = 0f;
+    private int totalAOEStacks = 0;
 
     private float previousHealthBonus = 0f;
 
-    private PlayerLevel    playerLevel;
-    private PlayerHealth   playerHealth;
+    private PlayerLevel playerLevel;
+    private PlayerHealth playerHealth;
     private PlayerMovement playerMovement;
-    private PlayerRegen    playerRegen;
+    private PlayerRegen playerRegen;
 
     private void Awake()
     {
-        playerLevel    = GetComponent<PlayerLevel>();
-        playerHealth   = GetComponent<PlayerHealth>();
+        playerLevel = GetComponent<PlayerLevel>();
+        playerHealth = GetComponent<PlayerHealth>();
         playerMovement = GetComponent<PlayerMovement>();
-        playerRegen    = GetComponent<PlayerRegen>();
+        playerRegen = GetComponent<PlayerRegen>();
     }
 
     public void AddItem(ItemData item)
@@ -45,56 +45,58 @@ public class PlayerStats : MonoBehaviour
 
     private void RecalculateStats()
     {
-        float totalHealthBonus      = 0f;
-        float totalDamageBonus      = 0f;
+        float totalHealthBonus = 0f;
+        float totalDamageBonus = 0f;
         float totalAttackSpeedBonus = 0f;
-        float totalMoveSpeedBonus   = 0f;
-        float totalRegen            = 0f;
-        int   aoeStacks             = 0;
+        float totalMoveSpeedBonus = 0f;
+        float totalRegen = 0f;
+        int aoeStacks = 0;
 
         foreach (var kvp in inventory)
         {
-            ItemData item  = kvp.Key;
-            int      stacks = kvp.Value;
+            ItemData item = kvp.Key;
+            int stacks = kvp.Value;
 
-            totalDamageBonus      += item.damageBonus      * stacks;
+            totalDamageBonus += item.damageBonus * stacks;
             totalAttackSpeedBonus += item.attackSpeedBonus * stacks;
-            totalMoveSpeedBonus   += item.moveSpeedBonus   * stacks;
-            totalHealthBonus      += item.maxHealthBonus   * stacks;
-            totalRegen            += item.regenPerSecond   * stacks;
+            totalMoveSpeedBonus += item.moveSpeedBonus * stacks;
+            totalHealthBonus += item.maxHealthBonus * stacks;
+            // regenPerSecond on ItemData is now treated as % per second (e.g. 0.02)
+            totalRegen += item.regenPerSecond * stacks;
 
             if (item.isAOEItem)
                 aoeStacks += stacks;
         }
 
+        // Health delta
         float healthDelta = totalHealthBonus - previousHealthBonus;
         if (healthDelta > 0f && playerHealth != null)
             playerHealth.IncreaseMaxHealth(healthDelta);
         previousHealthBonus = totalHealthBonus;
 
-        totalDamageMultiplier      = 1f + totalDamageBonus;
+        // Multipliers
+        totalDamageMultiplier = 1f + totalDamageBonus;
         totalAttackSpeedMultiplier = 1f + totalAttackSpeedBonus;
-        totalMoveSpeedMultiplier   = 1f + totalMoveSpeedBonus;
+        totalMoveSpeedMultiplier = 1f + totalMoveSpeedBonus;
 
-        float baseMoveSpeed = (playerLevel != null)
-            ? playerLevel.BaseMoveSpeed
-            : fallbackBaseMoveSpeed;
-
+        // Move speed
+        float baseMoveSpeed = (playerLevel != null) ? playerLevel.BaseMoveSpeed : fallbackBaseMoveSpeed;
         playerMovement?.SetMoveSpeed(baseMoveSpeed * totalMoveSpeedMultiplier);
 
-        totalRegenPerSecond = totalRegen;
-        playerRegen?.SetRegenRate(totalRegenPerSecond);
+        // Regen — pass total percent to PlayerRegen
+        totalRegenPercent = totalRegen;
+        playerRegen?.SetRegenRate(totalRegenPercent);
 
+        // AOE
         totalAOEStacks = aoeStacks;
     }
 
     public void RefreshStats() => RecalculateStats();
 
-    // ── Getters ───────────────────────────────────────────────────
-    public float DamageMultiplier       => totalDamageMultiplier;
-    public float AttackSpeedMultiplier  => totalAttackSpeedMultiplier;
-    public float RegenPerSecond         => totalRegenPerSecond;
-    public bool  HasAOE                 => totalAOEStacks > 0;
-    public int   AOEStacks              => totalAOEStacks;
+    public float DamageMultiplier => totalDamageMultiplier;
+    public float AttackSpeedMultiplier => totalAttackSpeedMultiplier;
+    public float RegenPercent => totalRegenPercent;
+    public bool HasAOE => totalAOEStacks > 0;
+    public int AOEStacks => totalAOEStacks;
     public Dictionary<ItemData, int> Inventory => inventory;
 }
